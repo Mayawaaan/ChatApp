@@ -1,0 +1,242 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Default theme variables */
+
+:root {
+    --primary-color: #6366f1;
+    /* Indigo 500 */
+    --primary-color-light: #c7d2fe;
+    /* Indigo 200 */
+    --primary-color-hover: #4f46e5;
+    /* Indigo 600 */
+    --primary-color-focus-ring: #818cf8;
+    /* Indigo 400 */
+    --bg-color: #a5b4fc;
+    /* Indigo 300 */
+    --bg-card-color: #818cf8;
+    /* Indigo 400 */
+}
+
+body {
+    background-color: var(--bg-color);
+    transition: background-color 0.3s ease;
+}
+
+input:focus {
+    transition: border-color 0.3s ease-in-out;
+}
+
+
+/* Theme definitions */
+
+.theme-indigo {
+    --primary-color: #6366f1;
+    --primary-color-light: #c7d2fe;
+    --primary-color-hover: #4f46e5;
+    --primary-color-focus-ring: #818cf8;
+    --bg-color: #a5b4fc;
+    --bg-card-color: #818cf8;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+.theme-blue {
+    --primary-color: #3b82f6;
+    --primary-color-light: #bfdbfe;
+    --primary-color-hover: #2563eb;
+    --primary-color-focus-ring: #60a5fa;
+    --bg-color: #93c5fd;
+    --bg-card-color: #60a5fa;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+.theme-green {
+    --primary-color: #22c55e;
+    --primary-color-light: #bbf7d0;
+    --primary-color-hover: #16a34a;
+    --primary-color-focus-ring: #4ade80;
+    --bg-color: #86efac;
+    --bg-card-color: #4ade80;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-red {
+    --primary-color: #ef4444;
+    --primary-color-light: #fecaca;
+    --primary-color-hover: #dc2626;
+    --primary-color-focus-ring: #f87171;
+    --bg-color: #fca5a5;
+    --bg-card-color: #f87171;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-purple {
+    --primary-color: #a855f7;
+    --primary-color-light: #e9d5ff;
+    --primary-color-hover: #9333ea;
+    --primary-color-focus-ring: #c084fc;
+    --bg-color: #d8b4fe;
+    --bg-card-color: #c084fc;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-pink {
+    --primary-color: #ec4899;
+    --primary-color-light: #fbcfe8;
+    --primary-color-hover: #db2777;
+    --primary-color-focus-ring: #f472b6;
+    --bg-color: #f9a8d4;
+    --bg-card-color: #f472b6;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-yellow {
+    --primary-color: #eab308;
+    --primary-color-light: #fef08a;
+    --primary-color-hover: #ca8a04;
+    --primary-color-focus-ring: #facc15;
+    --bg-color: #fde047;
+    --bg-card-color: #facc15;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-teal {
+    --primary-color: #14b8a6;
+    --primary-color-light: #a7f3d0;
+    --primary-color-hover: #0d9488;
+    --primary-color-focus-ring: #5eead4;
+    --bg-color: #99f6e4;
+    --bg-card-color: #5eead4;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-orange {
+    --primary-color: #f97316;
+    --primary-color-light: #fed7aa;
+    --primary-color-hover: #ea580c;
+    --primary-color-focus-ring: #fb923c;
+    --bg-color: #fdba74;
+    --bg-card-color: #fb923c;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-gray {
+    --primary-color: #6b7280;
+    --primary-color-light: #e5e7eb;
+    --primary-color-hover: #4b5563;
+    --primary-color-focus-ring: #9ca3af;
+    --bg-color: #d1d5db;
+    --bg-card-color: #9ca3af;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-emerald {
+    --primary-color: #10b981;
+    --primary-color-light: #a7f3d0;
+    --primary-color-hover: #059669;
+    --primary-color-focus-ring: #34d399;
+    --bg-color: #6ee7b7;
+    --bg-card-color: #34d399;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-cyan {
+    --primary-color: #06b6d4;
+    --primary-color-light: #a5f3fc;
+    --primary-color-hover: #0891b2;
+    --primary-color-focus-ring: #22d3ee;
+    --bg-color: #67e8f9;
+    --bg-card-color: #22d3ee;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-lime {
+    --primary-color: #84cc16;
+    --primary-color-light: #d9f99d;
+    --primary-color-hover: #65a30d;
+    --primary-color-focus-ring: #a3e635;
+    --bg-color: #bef264;
+    --bg-card-color: #a3e635;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-sky {
+    --primary-color: #0ea5e9;
+    --primary-color-light: #bae6fd;
+    --primary-color-hover: #0284c7;
+    --primary-color-focus-ring: #38bdf8;
+    --bg-color: #7dd3fc;
+    --bg-card-color: #38bdf8;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-rose {
+    --primary-color: #f43f5e;
+    --primary-color-light: #fecdd3;
+    --primary-color-hover: #e11d48;
+    --primary-color-focus-ring: #fb7185;
+    --bg-color: #fda4af;
+    --bg-card-color: #fb7185;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+.theme-fuchsia {
+    --primary-color: #d946ef;
+    --primary-color-light: #f0abfc;
+    --primary-color-hover: #c026d3;
+    --primary-color-focus-ring: #e879f9;
+    --bg-color: #f5d0fe;
+    --bg-card-color: #e879f9;
+    --text-primary: #000000;
+    --text-secondary: rgba(0, 0, 0, 0.7);
+}
+
+.theme-violet {
+    --primary-color: #8b5cf6;
+    --primary-color-light: #ddd6fe;
+    --primary-color-hover: #7c3aed;
+    --primary-color-focus-ring: #a78bfa;
+    --bg-color: #c4b5fd;
+    --bg-card-color: #a78bfa;
+    --text-primary: #ffffff;
+    --text-secondary: rgba(255, 255, 255, 0.7);
+}
+
+
+/* Individual theme colors for swatches on settings page */
+
+:root {
+    --indigo-color: #6366f1;
+    --blue-color: #3b82f6;
+    --green-color: #22c55e;
+    --red-color: #ef4444;
+    --purple-color: #a855f7;
+    --pink-color: #ec4899;
+    --yellow-color: #eab308;
+    --teal-color: #14b8a6;
+    --orange-color: #f97316;
+    --gray-color: #6b7280;
+    --emerald-color: #10b981;
+    --cyan-color: #06b6d4;
+    --lime-color: #84cc16;
+    --sky-color: #0ea5e9;
+    --rose-color: #f43f5e;
+    --fuchsia-color: #d946ef;
+    --violet-color: #8b5cf6;
+    --amber-color: #f59e0b;
+}
