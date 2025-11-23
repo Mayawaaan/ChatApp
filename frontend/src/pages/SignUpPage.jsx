@@ -20,11 +20,11 @@ const SignUpPage = () => {
 
     const handleChange = (e) => {
         const { name, value } = e.target;
-        // Avoid trimming password fields
-        if (name === "password" || name === "confirmPassword") {
+        // Avoid trimming password and fullName fields on every change
+        if (name === "password" || name === "confirmPassword" || name === "fullName") {
             setFormData({ ...formData, [name]: value });
         } else {
-            setFormData({ ...formData, [name]: value.trim() });
+            setFormData({ ...formData, [name]: value });
         }
     };
 
@@ -38,8 +38,13 @@ const SignUpPage = () => {
             return toast.error("Passwords do not match", { id: "signup-toast" });
         }
 
+        const processedData = {
+            ...formData,
+            fullName: formData.fullName.trim(),
+            email: formData.email.trim(),
+        };
         // We don't need to send confirmPassword to the backend
-        const { confirmPassword, ...rest } = formData;
+        const { confirmPassword, ...rest } = processedData;
         await signup(rest);
     };
 
