@@ -1,4 +1,3 @@
-Here is a comprehensive README.md file for your application, tailored to the structure and languages identified in your repository (JavaScript, GLSL, Backend/Frontend separation).
 
 ChatApp
 A real-time chat application built with a modern JavaScript stack, featuring a dedicated backend and frontend with interactive visual elements.
