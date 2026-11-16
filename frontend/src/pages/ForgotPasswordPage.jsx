@@ -4,6 +4,7 @@ import { ArrowLeft, Loader2 } from "lucide-react";
 import AuthLayout from "../components/AuthLayout";
 import { axiosInstance } from "../lib/axios";
 import { getErrorMessage } from "../lib/utils";
+import { BRAND } from "../config/brand";
 
 const ForgotPasswordPage = () => {
   const [email, setEmail] = useState("");
@@ -52,7 +53,7 @@ const ForgotPasswordPage = () => {
       subtitle={
         isSubmitted
           ? "Password reset instructions have been processed."
-          : "Enter the email address associated with your Relia account."
+          : `Enter the email address associated with your ${BRAND.name} account.`
       }
       footer={
         <div className="flex justify-center">

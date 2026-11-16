@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { generateToken } from "../lib/utils.js";
+import { generateToken, getJwtCookieOptions } from "../lib/utils.js";
 import User from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import cloudinary, { isCloudinaryConfigured } from "../lib/cloudinary.js";
@@ -79,7 +79,7 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
-    res.cookie("jwt", "", { maxAge: 0 });
+    res.cookie("jwt", "", { ...getJwtCookieOptions(), maxAge: 0 });
     res.status(200).json({ message: "Logged out successfully" });
   } catch (error) {
     console.log("Error in logout controller", error.message);
@@ -209,11 +209,16 @@ export const forgotPassword = async (req, res) => {
       user.resetPasswordExpires = new Date(Date.now() + 15 * 60 * 1000);
       await user.save();
 
-      const clientBaseUrl = (
-        process.env.CLIENT_URL ||
-        req.headers.origin ||
-        "http://localhost:5173"
-      ).replace(/\/+$/, "");
+      const configuredOrigins = (process.env.CLIENT_URL || "")
+        .split(",")
+        .map((o) => o.trim().replace(/\/+$/, ""))
+        .filter(Boolean);
+      const reqOrigin = (req.headers.origin || "").replace(/\/+$/, "");
+      const clientBaseUrl =
+        (reqOrigin && configuredOrigins.includes(reqOrigin) ? reqOrigin : "") ||
+        configuredOrigins[0] ||
+        reqOrigin ||
+        "http://localhost:5173";
       const resetUrl = `${clientBaseUrl}/reset-password/${rawToken}`;
 
       try {

@@ -20,6 +20,7 @@ import TermsPage from "./pages/TermsPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 import { useAuthStore } from "./store/useAuthStore.js";
 import { resolveColorMode, useThemeStore } from "./store/useThemeStore.js";
+import { BRAND } from "./config/brand.js";
 
 const App = () => {
   const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
@@ -49,7 +50,7 @@ const App = () => {
     return (
       <div className="flex flex-col gap-3 justify-center items-center h-dvh bg-background text-foreground">
         <Loader2 className="size-6 animate-spin text-primary" />
-        <p className="text-xs font-medium text-muted-foreground">Loading Relia…</p>
+        <p className="text-xs font-medium text-muted-foreground">Loading {BRAND.name}…</p>
       </div>
     );
   }

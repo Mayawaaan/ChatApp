@@ -9,6 +9,7 @@ import {
   playSubtleNotificationTone,
   useNotificationStore,
 } from "../store/useNotificationStore";
+import { BRAND } from "../config/brand";
 import Avatar from "./Avatar";
 
 const getPreviewText = (message) => {
@@ -131,8 +132,8 @@ const MessageNotificationListener = () => {
         try {
           const notification = new window.Notification(sender.fullName, {
             body: preview,
-            icon: "/relia-mark.svg",
-            tag: `relia-msg-${newMessage._id}`,
+            icon: BRAND.logoPath,
+            tag: `bloop-msg-${newMessage._id}`,
           });
           notification.onclick = () => {
             window.focus();
@@ -193,7 +194,7 @@ const MessageNotificationListener = () => {
             </div>
           ),
           {
-            id: `relia-msg-${newMessage._id}`,
+            id: `bloop-msg-${newMessage._id}`,
             duration: 4500,
           }
         );

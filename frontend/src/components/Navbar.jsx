@@ -3,7 +3,8 @@ import { Moon, Sun } from "lucide-react";
 import { useAuthStore } from "../store/useAuthStore";
 import { useChatStore } from "../store/useChatStore";
 import { resolveColorMode, useThemeStore } from "../store/useThemeStore";
-import ReliaLogo from "./ReliaLogo";
+import { BRAND } from "../config/brand";
+import BrandLogo from "./BrandLogo";
 import Avatar from "./Avatar";
 
 const AUTH_ROUTES = ["/login", "/signup", "/forgot-password", "/reset-password"];
@@ -43,9 +44,9 @@ const Navbar = () => {
           <Link
             to={authUser ? "/" : "/login"}
             className="rounded-md focus-visible:outline-2"
-            aria-label="Relia Home"
+            aria-label={`${BRAND.name} Home`}
           >
-            <ReliaLogo size="sm" />
+            <BrandLogo size="sm" />
           </Link>
 
           <nav className="flex items-center gap-1" aria-label="Main navigation">

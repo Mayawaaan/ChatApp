@@ -3,9 +3,15 @@ import { axiosInstance } from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { getErrorMessage } from "../lib/utils.js";
+import { BRAND } from "../config/brand.js";
+
+const API_ORIGIN = (import.meta.env.VITE_API_URL || "")
+  .trim()
+  .replace(/\/+$/, "");
 
 const BASE_URL =
-  import.meta.env.MODE === "development" ? "http://localhost:5001" : "/";
+  API_ORIGIN ||
+  (import.meta.env.MODE === "development" ? "http://localhost:5001" : "/");
 
 export const useAuthStore = create((set, get) => ({
   authUser: null,
@@ -52,7 +58,7 @@ export const useAuthStore = create((set, get) => ({
     try {
       const res = await axiosInstance.post("/auth/login", data);
       set({ authUser: res.data });
-      toast.success("Signed in to Relia");
+      toast.success(`Signed in to ${BRAND.name}`);
       get().connectSocket();
       return true;
     } catch (error) {

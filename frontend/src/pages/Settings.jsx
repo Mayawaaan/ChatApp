@@ -11,6 +11,7 @@ import {
   useNotificationStore,
 } from "../store/useNotificationStore";
 import { formatMessageTime } from "../lib/utils";
+import { BRAND } from "../config/brand";
 
 const ToggleSwitch = ({ id, checked, onChange, disabled = false, label }) => (
   <button
@@ -537,7 +538,7 @@ const Settings = () => {
                           ? "This browser does not support desktop notifications."
                           : permission === "denied"
                             ? "Blocked in browser site settings. Allow notifications there to enable."
-                            : "Deliver desktop alerts when Relia is in a background tab."}
+                            : `Deliver desktop alerts when ${BRAND.name} is in a background tab.`}
                       </p>
                     </div>
 

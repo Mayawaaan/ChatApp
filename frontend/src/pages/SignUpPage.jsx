@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import AuthLayout from "../components/AuthLayout";
 import { useAuthStore } from "../store/useAuthStore";
+import { BRAND } from "../config/brand";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -50,7 +51,7 @@ const SignUpPage = () => {
   return (
     <AuthLayout
       title="Create your account"
-      subtitle="Join Relia to start real-time conversations with your contacts."
+      subtitle={`Join ${BRAND.name} to start real-time conversations with your contacts.`}
       reverseOnDesktop
       footer={
         <p className="text-center">

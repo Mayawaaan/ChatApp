@@ -4,6 +4,7 @@ import { ArrowLeft, Eye, EyeOff, Loader2 } from "lucide-react";
 import AuthLayout from "../components/AuthLayout";
 import { axiosInstance } from "../lib/axios";
 import { getErrorMessage } from "../lib/utils";
+import { BRAND } from "../config/brand";
 
 const ResetPasswordPage = () => {
   const { token: paramToken } = useParams();
@@ -100,10 +101,10 @@ const ResetPasswordPage = () => {
 
   const subtitle =
     status === "success"
-      ? "Your Relia password has been changed successfully."
+      ? `Your ${BRAND.name} password has been changed successfully.`
       : status === "invalid"
         ? "Please request a new password reset link."
-        : "Choose a strong password for your Relia account.";
+        : `Choose a strong password for your ${BRAND.name} account.`;
 
   return (
     <AuthLayout

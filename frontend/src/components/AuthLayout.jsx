@@ -5,7 +5,7 @@ import { motion as Motion } from "motion/react";
 import gsap from "gsap";
 import { BRAND } from "../config/brand";
 import { resolveColorMode, useThemeStore } from "../store/useThemeStore";
-import ReliaLogo from "./ReliaLogo";
+import BrandLogo from "./BrandLogo";
 
 const ThreeScene = lazy(() => import("./ThreeScene"));
 
@@ -55,7 +55,7 @@ const AuthLayout = ({
       >
         <div className="relative z-10 flex items-center justify-between">
           <Link to="/login" className="focus-visible:outline-2 rounded-md">
-            <ReliaLogo size="md" />
+            <BrandLogo size="md" />
           </Link>
         </div>
 
@@ -84,7 +84,7 @@ const AuthLayout = ({
         <div className="px-5 sm:px-8 pt-5 flex items-center justify-between">
           <div className="lg:hidden">
             <Link to="/login" className="focus-visible:outline-2 rounded-md">
-              <ReliaLogo size="sm" />
+              <BrandLogo size="sm" />
             </Link>
           </div>
           <div className="ml-auto flex items-center gap-2">

@@ -1,6 +1,6 @@
 import { BRAND } from "../config/brand";
 
-const ReliaLogo = ({ size = "md", showTagline = false }) => {
+const BrandLogo = ({ size = "md", showTagline = false }) => {
   const iconSize = size === "sm" ? "w-6 h-6 rounded-md" : size === "lg" ? "w-9 h-9 rounded-xl" : "w-7 h-7 rounded-lg";
   const textSize = size === "sm" ? "text-[15px]" : size === "lg" ? "text-xl" : "text-base";
 
@@ -37,4 +37,4 @@ const ReliaLogo = ({ size = "md", showTagline = false }) => {
   );
 };
 
-export default ReliaLogo;
+export default BrandLogo;

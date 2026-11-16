@@ -29,13 +29,13 @@ export const sendPasswordResetEmail = async ({ to, fullName, resetUrl }) => {
   const fromAddress = process.env.SMTP_FROM || process.env.SMTP_USER;
 
   await transporter.sendMail({
-    from: `"Relia" <${fromAddress}>`,
+    from: `"Bloop" <${fromAddress}>`,
     to,
-    subject: "Reset your Relia password",
-    text: `Hello ${fullName || "there"},\n\nWe received a request to reset your Relia password. Open the link below to choose a new password (valid for 15 minutes):\n\n${resetUrl}\n\nIf you did not request a password reset, you can safely ignore this email.`,
+    subject: "Reset your Bloop password",
+    text: `Hello ${fullName || "there"},\n\nWe received a request to reset your Bloop password. Open the link below to choose a new password (valid for 15 minutes):\n\n${resetUrl}\n\nIf you did not request a password reset, you can safely ignore this email.`,
     html: `
       <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 32px 24px; color: #0f172a;">
-        <h2 style="margin: 0 0 12px; font-size: 20px; font-weight: 600;">Reset your Relia password</h2>
+        <h2 style="margin: 0 0 12px; font-size: 20px; font-weight: 600;">Reset your Bloop password</h2>
         <p style="margin: 0 0 16px; font-size: 14px; line-height: 1.6; color: #475569;">
           Hello ${fullName ? fullName.replace(/[<>&"']/g, "") : "there"},
         </p>

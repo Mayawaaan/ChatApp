@@ -10,7 +10,7 @@ const getAllowedOrigins = () => {
   const raw = process.env.CLIENT_URL || "http://localhost:5173";
   return raw
     .split(",")
-    .map((o) => o.trim())
+    .map((o) => o.trim().replace(/\/+$/, ""))
     .filter(Boolean);
 };
 
@@ -19,6 +19,7 @@ export const io = new Server(server, {
     origin: getAllowedOrigins(),
     credentials: true,
   },
+  transports: ["websocket", "polling"],
 });
 
 // Track multiple active sockets per user (supports multiple tabs/devices cleanly)

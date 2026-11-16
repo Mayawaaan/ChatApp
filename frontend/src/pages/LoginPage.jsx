@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import AuthLayout from "../components/AuthLayout";
 import { useAuthStore } from "../store/useAuthStore";
+import { BRAND } from "../config/brand";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -34,11 +35,11 @@ const LoginPage = () => {
 
   return (
     <AuthLayout
-      title="Sign in to Relia"
+      title={`Sign in to ${BRAND.name}`}
       subtitle="Enter your credentials to access your conversations."
       footer={
         <p className="text-center">
-          New to Relia?{" "}
+          New to {BRAND.name}?{" "}
           <Link
             to="/signup"
             className="font-semibold text-primary hover:underline"
