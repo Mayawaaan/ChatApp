@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
 
 export const getJwtCookieOptions = () => {
-  const isProd = process.env.NODE_ENV === "production";
+  const isCrossOriginHttps =
+    process.env.NODE_ENV === "production" || process.env.RENDER === "true";
+
   return {
     httpOnly: true, // prevent XSS attacks
-    sameSite: isProd ? "none" : "strict", // 'none' required for cross-site Vercel -> Render cookies
-    secure: isProd,
+    sameSite: isCrossOriginHttps ? "none" : "strict", // 'none' required for cross-site Vercel -> Render cookies
+    secure: isCrossOriginHttps,
   };
 };
 

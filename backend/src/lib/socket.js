@@ -2,23 +2,13 @@ import { Server } from "socket.io";
 import http from "http";
 import express from "express";
 import jwt from "jsonwebtoken";
+import { corsOptions } from "./cors.js";
 
 export const app = express();
 export const server = http.createServer(app);
 
-const getAllowedOrigins = () => {
-  const raw = process.env.CLIENT_URL || "http://localhost:5173";
-  return raw
-    .split(",")
-    .map((o) => o.trim().replace(/\/+$/, ""))
-    .filter(Boolean);
-};
-
 export const io = new Server(server, {
-  cors: {
-    origin: getAllowedOrigins(),
-    credentials: true,
-  },
+  cors: corsOptions,
   transports: ["websocket", "polling"],
 });
 
@@ -51,9 +41,13 @@ function parseCookies(cookieHeader = "") {
 io.use((socket, next) => {
   try {
     const cookies = parseCookies(socket.handshake.headers?.cookie);
-    const token = cookies.jwt;
+    const authToken =
+      typeof socket.handshake.auth?.token === "string"
+        ? socket.handshake.auth.token
+        : null;
+    const token = cookies.jwt || authToken;
     if (!token) {
-      return next(new Error("Unauthorized - Missing session cookie"));
+      return next(new Error("Unauthorized - Missing session token"));
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     if (!decoded?.userId) {

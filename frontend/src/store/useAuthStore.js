@@ -1,5 +1,9 @@
 import { create } from "zustand";
-import { axiosInstance } from "../lib/axios.js";
+import {
+  axiosInstance,
+  getStoredAuthToken,
+  setStoredAuthToken,
+} from "../lib/axios.js";
 import toast from "react-hot-toast";
 import { io } from "socket.io-client";
 import { getErrorMessage } from "../lib/utils.js";
@@ -31,6 +35,7 @@ export const useAuthStore = create((set, get) => ({
       set({ authUser: res.data });
       get().connectSocket();
     } catch {
+      setStoredAuthToken(null);
       set({ authUser: null });
     } finally {
       set({ isCheckingAuth: false });
@@ -41,7 +46,9 @@ export const useAuthStore = create((set, get) => ({
     set({ isSigningUp: true });
     try {
       const res = await axiosInstance.post("/auth/signup", data);
-      set({ authUser: res.data });
+      const { token, ...user } = res.data || {};
+      if (token) setStoredAuthToken(token);
+      set({ authUser: user });
       toast.success("Account created successfully");
       get().connectSocket();
       return true;
@@ -57,7 +64,9 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      set({ authUser: res.data });
+      const { token, ...user } = res.data || {};
+      if (token) setStoredAuthToken(token);
+      set({ authUser: user });
       toast.success(`Signed in to ${BRAND.name}`);
       get().connectSocket();
       return true;
@@ -72,6 +81,7 @@ export const useAuthStore = create((set, get) => ({
   logout: async () => {
     try {
       await axiosInstance.post("/auth/logout");
+      setStoredAuthToken(null);
       get().disconnectSocket();
       set({ authUser: null, onlineUsers: [], typingUsers: {} });
       toast.success("Signed out");
@@ -131,8 +141,10 @@ export const useAuthStore = create((set, get) => ({
 
     set({ socketStatus: "connecting" });
 
+    const token = getStoredAuthToken();
     const socket = io(BASE_URL, {
       withCredentials: true,
+      auth: token ? { token } : undefined,
       query: {
         userId: authUser._id,
       },
