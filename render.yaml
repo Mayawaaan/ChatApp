@@ -3,7 +3,7 @@ services:
     name: bloop-backend
     runtime: node
     rootDir: backend
-    buildCommand: npm install
+    buildCommand: npm run build
     startCommand: npm start
     healthCheckPath: /api/health
     envVars:

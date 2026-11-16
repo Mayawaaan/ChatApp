@@ -2,10 +2,12 @@
     "name": "backend",
     "version": "1.0.0",
     "description": "",
-    "main": "src/index.js",
+    "main": "server.js",
     "scripts": {
         "dev": "nodemon server.js",
         "start": "node server.js",
+        "build": "npm install && node --check server.js",
+        "check": "node --check server.js",
         "seed": "node src/seeds/user.seed.js",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
