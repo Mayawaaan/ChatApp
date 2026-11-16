@@ -1,28 +1,24 @@
-import { MessageSquare } from "lucide-react";
+import { BRAND } from "../config/brand";
 
 const NoChatSelected = () => {
   return (
-    <div className="w-full flex flex-1 flex-col items-center justify-center p-16 bg-base-100/50">
-      <div className="max-w-md text-center space-y-6">
-        {/* Icon Display */}
-        <div className="flex justify-center gap-4 mb-4">
-          <div className="relative">
-            <div
-              className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center
-             justify-center animate-bounce"
-            >
-              <MessageSquare className="w-8 h-8 text-primary " />
-            </div>
-          </div>
-        </div>
-
-        {/* Welcome Text */}
-        <h2 className="text-2xl font-bold">Welcome to Chatty!</h2>
-        <p className="text-base-content/60">
-          Select a conversation from the sidebar to start chatting
+    <section
+      aria-label="No conversation selected"
+      className="hidden md:flex flex-1 flex-col items-center justify-center p-10 bg-background"
+    >
+      <div className="max-w-sm text-center space-y-2">
+        <p className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+          {BRAND.name}
+        </p>
+        <h2 className="text-lg font-heading font-semibold text-foreground">
+          Select a conversation
+        </h2>
+        <p className="text-sm text-muted-foreground leading-relaxed">
+          Choose a contact from the sidebar to read recent messages or start a
+          real-time thread.
         </p>
       </div>
-    </div>
+    </section>
   );
 };
 

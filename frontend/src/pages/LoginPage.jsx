@@ -1,98 +1,140 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Eye, EyeOff, Loader, Mail, Lock } from "lucide-react";
-import toast from "react-hot-toast";
-
-import ThreeScene from "../components/ThreeScene";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import AuthLayout from "../components/AuthLayout";
 import { useAuthStore } from "../store/useAuthStore";
 
 const LoginPage = () => {
-	const [showPassword, setShowPassword] = useState(false);
-	const [formData, setFormData] = useState({
-		email: "",
-		password: "",
-	});
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [formError, setFormError] = useState("");
 
-	const { login, isLoggingIn } = useAuthStore();
+  const { login, isLoggingIn } = useAuthStore();
 
-	const handleChange = (e) => {
-		setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
-	};
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormError("");
+    setFormData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.trim() : value,
+    }));
+  };
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		if (!formData.email || !formData.password) {
-			return toast.error("Please fill all fields", { id: "login-toast" });
-		}
-		await login(formData);
-	};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!formData.email || !formData.password) {
+      setFormError("Enter both your email address and password.");
+      return;
+    }
+    await login(formData);
+  };
 
-	return (
-		<div className='flex w-full h-screen'>
-			{/* Left side - 3D Scene */}
-			<div className='flex-1 hidden md:flex' style={{ backgroundColor: 'var(--primary-color-light)' }}>
-				<ThreeScene />
-			</div>
+  return (
+    <AuthLayout
+      title="Sign in to Relia"
+      subtitle="Enter your credentials to access your conversations."
+      footer={
+        <p className="text-center">
+          New to Relia?{" "}
+          <Link
+            to="/signup"
+            className="font-semibold text-primary hover:underline"
+          >
+            Create an account
+          </Link>
+        </p>
+      }
+    >
+      <form className="space-y-4" onSubmit={handleSubmit} noValidate>
+        {formError && (
+          <div
+            role="alert"
+            className="px-3 py-2.5 rounded-lg bg-destructive/10 border border-destructive/25 text-xs font-medium text-destructive"
+          >
+            {formError}
+          </div>
+        )}
 
-			{/* Right side - Form */}
-			<div className='flex-1 flex justify-center items-center' style={{ backgroundColor: 'var(--bg-color)' }}>
-				<div className='w-full max-w-md p-8 space-y-4 rounded-lg shadow-md' style={{ backgroundColor: 'var(--bg-card-color)' }}>
-					<div className='text-center'>
-						<h1 className='text-3xl font-bold' style={{ color: 'var(--text-primary)' }}>Welcome Back!</h1>
-						<p style={{ color: 'var(--text-secondary)' }}>Log in to continue your journey.</p>
-					</div>
-					<form className='space-y-6' onSubmit={handleSubmit}>
-						<div className='relative'>
-							<label className='text-sm font-medium' style={{ color: 'var(--text-primary)' }}>Email</label>
-							<Mail className='absolute left-3 top-9 h-5 w-5 text-gray-400' />
-							<input
-								type='email'
-								name='email'
-								value={formData.email}
-								onChange={handleChange}
-								className='w-full pl-10 pr-3 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)]'
-								placeholder='you@example.com'
-							/>
-						</div>
-						<div className='relative'>
-							<label className='text-sm font-medium' style={{ color: 'var(--text-primary)' }}>Password</label>
-							<Lock className='absolute left-3 top-9 h-5 w-5 text-gray-400' />
-							<input
-								type={showPassword ? "text" : "password"}
-								name='password'
-								value={formData.password}
-								onChange={handleChange}
-								className='w-full pl-10 pr-10 py-2 mt-1 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-[var(--primary-color)] focus:border-[var(--primary-color)]'
-								placeholder='••••••••'
-							/>
-							<button
-								type='button'
-								onClick={() => setShowPassword(!showPassword)}
-								className='absolute inset-y-0 right-0 top-7 pr-3 flex items-center text-gray-500'
-							>
-								{showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-							</button>
-						</div>
+        <div className="space-y-1.5">
+          <label
+            htmlFor="login-email"
+            className="block text-xs font-medium text-foreground"
+          >
+            Email address
+          </label>
+          <input
+            id="login-email"
+            type="email"
+            name="email"
+            autoComplete="email"
+            value={formData.email}
+            onChange={handleChange}
+            placeholder="name@company.com"
+            className="w-full h-10 px-3 text-sm rounded-lg bg-surface-elevated border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus-ring transition-colors"
+          />
+        </div>
 
-						<button
-							type='submit'
-							className='w-full flex justify-center py-2.5 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50'
-							style={{ backgroundColor: 'var(--primary-color)', '--tw-ring-color': 'var(--primary-color)' }}
-							disabled={isLoggingIn}
-						>
-							{isLoggingIn ? <Loader className='animate-spin' /> : "Log In"}
-						</button>
-					</form>
-					<p className='text-center text-sm' style={{ color: 'var(--text-secondary)' }}>
-						Don't have an account?{" "}
-						<Link to='/signup' className='font-medium hover:underline' style={{ color: 'var(--primary-color)' }}>
-							Sign Up
-						</Link>
-					</p>
-				</div>
-			</div>
-		</div>
-	);
+        <div className="space-y-1.5">
+          <div className="flex items-center justify-between gap-2">
+            <label
+              htmlFor="login-password"
+              className="block text-xs font-medium text-foreground"
+            >
+              Password
+            </label>
+            <Link
+              to="/forgot-password"
+              className="text-xs font-medium text-primary hover:underline"
+            >
+              Forgot password?
+            </Link>
+          </div>
+          <div className="relative">
+            <input
+              id="login-password"
+              type={showPassword ? "text" : "password"}
+              name="password"
+              autoComplete="current-password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter your password"
+              className="w-full h-10 px-3 pr-10 text-sm rounded-lg bg-surface-elevated border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:border-primary focus:ring-2 focus:ring-focus-ring transition-colors"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-1.5 rounded-md text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+            >
+              {showPassword ? (
+                <EyeOff className="size-4" />
+              ) : (
+                <Eye className="size-4" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          disabled={isLoggingIn}
+          className="w-full h-10 mt-1 rounded-lg bg-primary text-primary-foreground hover:bg-primary-hover text-sm font-semibold flex items-center justify-center gap-2 transition-colors disabled:opacity-55 disabled:cursor-not-allowed cursor-pointer"
+        >
+          {isLoggingIn ? (
+            <>
+              <Loader2 className="size-4 animate-spin" />
+              <span>Signing in…</span>
+            </>
+          ) : (
+            "Sign in"
+          )}
+        </button>
+      </form>
+    </AuthLayout>
+  );
 };
 
 export default LoginPage;

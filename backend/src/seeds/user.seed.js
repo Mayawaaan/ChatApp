@@ -1,8 +1,14 @@
 import { config } from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
+import bcrypt from "bcryptjs";
+import mongoose from "mongoose";
 import { connectDB } from "../lib/db.js";
 import User from "../models/user.model.js";
 
-config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+config({ path: path.join(__dirname, "../../.env") });
 
 const seedUsers = [
   // Female Users
@@ -128,10 +134,34 @@ const seedDatabase = async () => {
   try {
     await connectDB();
 
-    await User.insertMany(seedUsers);
+    // Check and drop obsolete indexes if present (e.g. leftover username_1 index)
+    try {
+      const indexes = await User.collection.getIndexes();
+      if (indexes.username_1) {
+        await User.collection.dropIndex("username_1");
+        console.log("Dropped obsolete username_1 index");
+      }
+    } catch (idxErr) {
+      console.log("Index check/drop info:", idxErr.message);
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash("123456", salt);
+
+    const usersWithHashedPasswords = seedUsers.map((user) => ({
+      ...user,
+      password: hashedPassword,
+    }));
+
+    await User.deleteMany({ email: { $in: seedUsers.map((u) => u.email) } });
+
+    await User.insertMany(usersWithHashedPasswords);
     console.log("Database seeded successfully");
   } catch (error) {
     console.error("Error seeding database:", error);
+  } finally {
+    await mongoose.disconnect();
+    process.exit(0);
   }
 };
 
